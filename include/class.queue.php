@@ -2943,8 +2943,9 @@ extends QueueColumnFilter {
     static $desc = /* @trans */ "Ticket Link";
 
     function filter($text, $row) {
+        $pjax = (!is_subclass_of($this, 'TicketLinkFilter')) ? '#pjax-container-tix' : '';
         if ($link = $this->getLink($row))
-            return sprintf('<a style="display:inline" href="%s">%s</a>', $link, $text);
+            return sprintf('<a data-pjax-container="'.$pjax.'" style="display:inline" href="%s">%s</a>', $link, $text);
     }
 
     function mangleQuery($query, $column) {
@@ -2996,7 +2997,7 @@ extends TicketLinkFilter {
 
     function filter($text, $row) {
         $link = $this->getLink($row);
-        return sprintf('<a style="display: inline" class="preview" data-preview="#tickets/%d/preview" href="%s">%s</a>',
+        return sprintf('<a data-pjax-container="#pjax-container-tix" style="display: inline" class="preview" data-preview="#tick
             $row['ticket_id'], $link, $text);
     }
 }

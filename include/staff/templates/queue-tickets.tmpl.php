@@ -98,6 +98,7 @@ $pageNav->setTotal($count, true);
 $pageNav->setURL('tickets.php', $args);
 ?>
 
+<div id="pjax-container-tix"  class="<?php if ($_POST) echo 'no-pjax'; ?>">
 <!-- SEARCH FORM START -->
 <div id='basic_search'>
   <div class="pull-right" style="height:25px">
@@ -138,6 +139,7 @@ return false;">
         <div class="content">
             <div class="pull-left flush-left">
                 <h2><a href="<?php echo $refresh_url; ?>"
+                    data-pjax-container="#pjax-container-tix"
                     title="<?php echo __('Refresh'); ?>"><i class="icon-refresh"></i> <?php echo
                     $queue->getName(); ?></a>
                     <?php
@@ -270,7 +272,7 @@ foreach ($tickets as $T) {
 ?>  <div>
       <span class="faded pull-right"><?php echo $pageNav->showing(); ?></span>
 <?php
-        echo __('Page').':'.$pageNav->getPageLinks().'&nbsp;';
+        echo __('Page').':'.$pageNav->getPageLinks('', '#pjax-container-tix').'&nbsp;';
         ?>
         <a href="#tickets/export/<?php echo $queue->getId(); ?>" id="queue-export" class="no-pjax"
             ><?php echo __('Export'); ?></a>
@@ -292,3 +294,4 @@ $(function() {
     });
 });
 </script>
+</div>

@@ -16,7 +16,8 @@ global $thisstaff;
   </span>
 
   <a class="truncate <?php if ($selected) echo ' active'; ?>" href="<?php echo $queue->getHref();
-    ?>" title="<?php echo Format::htmlchars($q->getName()); ?>">
+    ?>" title="<?php echo Format::htmlchars($q->getName()); ?>"
+    data-pjax-container="#pjax-container-tix">
       <?php
         echo Format::htmlchars($q->getName()); ?>
       <?php

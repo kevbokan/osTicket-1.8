@@ -522,7 +522,9 @@ if($ticket) {
     }
 }
 
-require_once(STAFFINC_DIR.'header.inc.php');
+// If PJAX request for tix container then exclude navigation
+if (false == strpos($_GET['_pjax'], 'pjax-container-tix'))
+    require_once(STAFFINC_DIR.'header.inc.php');
 require_once(STAFFINC_DIR.$inc);
 print $response_form->getMedia();
 require_once(STAFFINC_DIR.'footer.inc.php');

@@ -35,7 +35,7 @@ var query = addSearchParam({'<?php echo $param; ?>': $(event.target).data('value
 $.pjax({
     url: '?' + query,
     timeout: 2000,
-    container: '#pjax-container'});
+    container: '#pjax-container-tix'});
 return false;">
 <ul <?php if ($choices && count($choices) > 20) echo 'style="height:500px;overflow-x:hidden;overflow-y:scroll;"'; ?>>
     <?php if ($choices) {

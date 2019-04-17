@@ -12,7 +12,7 @@ $selected = (!isset($_REQUEST['a'])  && $_REQUEST['queue'] == $this_queue->getId
 <li class="top-queue item <?php if ($child_selected) echo 'child active';
     elseif ($selected) echo 'active'; ?>">
   <a href="<?php echo $this_queue->getHref(); ?>"
-    class="Ticket"><i class="small icon-sort-down pull-right"></i><?php echo $this_queue->getName(); ?>
+    class="Ticket" data-pjax-container="#pjax-container-tix"><i class="small icon-sort-down pull-right"></i><?php echo $this_que
 <?php if ($cfg->showTopLevelTicketCounts()) { ?>
     <span id="queue-count-bucket" class="hidden">
       (<span class="queue-count"
@@ -33,7 +33,8 @@ $selected = (!isset($_REQUEST['a'])  && $_REQUEST['queue'] == $this_queue->getId
         </span>
 
         <a class="truncate <?php if ($selected) echo ' active'; ?>" href="<?php echo $q->getHref();
-          ?>" title="<?php echo Format::htmlchars($q->getName()); ?>">
+          ?>" title="<?php echo Format::htmlchars($q->getName()); ?>"
+          data-pjax-container="#pjax-container-tix">
         <?php
           echo Format::htmlchars($q->getName()); ?>
         </a>

@@ -1128,6 +1128,23 @@ $(document).on('pjax:complete', function() {
 if ($.support.pjax) {
   $(document).on('click', 'a', function(event) {
     var $this = $(this);
+    // Removes/Applies old/new bolding and Active class
+    // from/to previous/new active queues.
+    if ($this.parents().hasClass('customQ-dropdown')
+        || $this.parents().hasClass('top-queue')) {
+        // Remove bold styling and Active class
+        $(document).find('.active').each(function(key, value) {
+            // Skip first result as it's always the top tab
+            // (ie. Tickets, Tasks, etc.)
+            if (key == 0)
+                return true;
+            $(this).removeClass('active');
+            $(this).css('font-weight','');
+        });
+        // Add bold styling and Active class
+        $this.css('font-weight','bold');
+        $this.addClass('active');
+    }
     if (!$this.hasClass('no-pjax')
         && !$this.closest('.no-pjax').length
         && $this.attr('href').charAt(0) != '#')
