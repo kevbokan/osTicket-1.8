@@ -459,7 +459,7 @@ class Format {
 
         $input = preg_replace_callback('/<img ([^>]*)(src="([^"]+)")([^>]*)\/?>/',
             function($match) use ($local, $allowed, $exclude, $display) {
-                if (strpos($match[3], 'cid:') !== false)
+                if (strpos($match[3], 'cid:') == 0)
                     $local = true;
 
                 // Split the src URL and get the extension
