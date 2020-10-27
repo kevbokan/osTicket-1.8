@@ -142,6 +142,20 @@ class Form {
         }
     }
 
+    function verifyWebformFieldNames($vars, &$errors) {
+        $form_names = array();
+        foreach ($this->getFields() as $f)
+            $form_names[] = $f->get('name');
+
+        foreach ($vars as $name=>$v) {
+            if (in_array($name, $form_names)) {
+                $errors['err'] = __('Field mismatch');
+                return $errors;
+            }
+        }
+        return true;
+    }
+
     function getClean($validate=true) {
         if (!$this->_clean) {
             $this->_clean = array();

@@ -96,6 +96,22 @@ class DynamicForm extends VerySimpleModel {
         return call_user_func_array($delegate, $args);
     }
 
+    function verifyWebformFieldNames($vars, &$errors) {
+        $form_names = array();
+        foreach ($this->getFields() as $f)
+            $form_names[] = $f->get('name');
+
+        foreach ($vars as $name=>$v) {
+            if ($name == 'message')
+                continue;
+            if (in_array($name, $form_names)) {
+                $errors['err'] = __('Field mismatch');
+                return $errors;
+            }
+        }
+        return true;
+    }
+
     function getTitle() {
         return $this->getLocal('title');
     }

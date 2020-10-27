@@ -3908,8 +3908,8 @@ implements RestrictedAccess, Threadable, Searchable {
         return db_fetch_array(db_query($sql));
     }
 
-    protected function filterTicketData($origin, $vars, $forms, $user=false, $postCreate=false) {
-        global $cfg;
+    protected function filterTicketData($origin, $vars, $forms, $user=false, $postCreate=false, &$errors=array()) {
+        global $cfg, $thisstaff;
 
         // Unset all the filter data field data in case things change
         // during recursive calls
@@ -3926,6 +3926,9 @@ implements RestrictedAccess, Threadable, Searchable {
         if (!$user) {
             $interesting = array('name', 'email');
             $user_form = UserForm::getUserForm()->getForm($vars);
+            // If submitted via Web verify the field names in $_POST
+            if ($origin == 'Web' || $thisstaff)
+                $user_form->verifyWebformFieldNames($vars, $errors);
             // Add all the user-entered info for filtering
             foreach ($interesting as $F) {
                 if ($field = $user_form->getField($F))
@@ -4074,6 +4077,10 @@ implements RestrictedAccess, Threadable, Searchable {
             if ($vars['topicId']) {
                 if ($__topic=Topic::lookup($vars['topicId'])) {
                     foreach ($__topic->getForms() as $idx=>$__F) {
+                        // If submitted via Web verify the field names in $_POST
+                        if ($origin == 'Web' || $thisstaff)
+                            $__F->verifyWebformFieldNames($vars, $errors);
+
                         $disabled = array();
                         foreach ($__F->getFields() as $field) {
                             if (!$field->isEnabled() && $field->hasFlag(DynamicFormField::FLAG_ENABLED))
@@ -4104,7 +4111,7 @@ implements RestrictedAccess, Threadable, Searchable {
 
             try {
                 $vars = self::filterTicketData($origin, $vars,
-                    array_merge(array($form), $topic_forms), $user, false);
+                    array_merge(array($form), $topic_forms), $user, false, $errors);
             }
             catch (RejectedException $ex) {
                 return $reject_ticket(
