@@ -56,6 +56,9 @@ if ($_POST) {
     }
 }
 
+// Add nonce for webform field name rotation
+$_SESSION['nonce'] = ($_POST && $errors) ? $_SESSION['nonce'] : rand();
+
 //page
 $nav->setActiveNav('new');
 if ($cfg->isClientLoginRequired()) {

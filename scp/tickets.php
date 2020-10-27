@@ -444,6 +444,9 @@ if($_POST && !$errors):
         $thisstaff ->resetStats(); //We'll need to reflect any changes just made!
 endif;
 
+// Add nonce for webform field name rotation
+$_SESSION['nonce'] = ($_POST && $errors) ? $_SESSION['nonce'] : rand();
+
 if ($redirect) {
     if ($msg)
         Messages::success($msg);
