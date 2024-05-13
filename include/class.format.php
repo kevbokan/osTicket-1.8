@@ -336,8 +336,9 @@ class Format {
                   ':<div dir=(3D)?"ltr">(.*?)<\/div>(.*):is', # drop Gmail "ltr" attributes
                   ':data-cid="[^"]*":',         # drop image cid attributes
                   '(position:[^!";]+;?)',
+                  ':[\x{2002}-\x{200B}]+:u',    # unicode spaces
             ),
-            array('', '', '', '', '<html', '$4', '$2 $3', '', ''),
+            array('', '', '', '', '<html', '$4', '$2 $3', '', '', ' '),
             $html);
 
         // HtmLawed specific config only
