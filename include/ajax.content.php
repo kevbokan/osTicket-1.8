@@ -185,7 +185,7 @@ class ContentAjaxAPI extends AjaxController {
     }
 
     function updateContent($id) {
-        global $thisstaff;
+        global $thisstaff, $cfg;
 
         if (!$thisstaff || !$thisstaff->isAdmin())
             Http::response(403, 'Access Denied');
@@ -206,6 +206,7 @@ class ContentAjaxAPI extends AjaxController {
         }
         if (!$errors['err'])
             $errors['err'] = __('Correct any errors below and try again.');
+        $langs = Internationalization::getConfiguredSystemLanguages();
         $info = $_POST;
         $errors = Format::htmlchars($errors);
         include STAFFINC_DIR . 'templates/content-manage.tmpl.php';
